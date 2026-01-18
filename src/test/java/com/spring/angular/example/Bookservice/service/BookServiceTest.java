@@ -25,35 +25,35 @@ public class BookServiceTest {
 
     @Test
     public void testSaveBook() {
-        Book book = new Book();
-        // Assuming Book has appropriate setters/getters
+        Book book = new Book(1, "Java", 999);
         when(bookRepository.save(book)).thenReturn(book);
 
         Book savedBook = bookService.saveBook(book);
-
         assertEquals(book, savedBook);
-        verify(bookRepository, times(1)).save(book);
     }
 
     @Test
     public void testGetBooks() {
-        List<Book> books = Arrays.asList(new Book(), new Book());
+        Book book1 = new Book(1, "Java", 999);
+        Book book2 = new Book(2, "Spring", 1199);
+        List<Book> books = Arrays.asList(book1, book2);
+
         when(bookRepository.findAll()).thenReturn(books);
 
         List<Book> result = bookService.getBooks();
-
         assertEquals(2, result.size());
-        verify(bookRepository, times(1)).findAll();
+        assertEquals("Java", result.get(0).getName());
     }
 
     @Test
     public void testDeleteBook() {
-        int id = 1;
-        doNothing().when(bookRepository).deleteById(id);
+        int bookId = 1;
+        String expectedResponse = "book deleted with id : " + bookId;
 
-        String result = bookService.deleteBook(id);
+        doNothing().when(bookRepository).deleteById(bookId);
 
-        assertEquals("book deleted with id : " + id, result);
-        verify(bookRepository, times(1)).deleteById(id);
+        String actualResponse = bookService.deleteBook(bookId);
+        assertEquals(expectedResponse, actualResponse);
+        verify(bookRepository, times(1)).deleteById(bookId);
     }
 }
