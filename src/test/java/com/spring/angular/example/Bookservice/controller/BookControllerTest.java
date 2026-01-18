@@ -2,7 +2,7 @@ package com.spring.angular.example.Bookservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.angular.example.Bookservice.entity.Book;
-import com.spring.angular.example.Bookservice.repository.BookRepository;
+import com.spring.angular.example.Bookservice.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,7 +27,7 @@ public class BookControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -38,7 +38,7 @@ public class BookControllerTest {
         // Assuming Book has appropriate setters/getters
         // book.setName("Test Book");
 
-        when(bookRepository.save(any(Book.class))).thenReturn(book);
+        when(bookService.saveBook(any(Book.class))).thenReturn(book);
 
         mockMvc.perform(post("/addBook")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -49,7 +49,7 @@ public class BookControllerTest {
     @Test
     public void testGetBooks() throws Exception {
         List<Book> books = Arrays.asList(new Book(), new Book());
-        when(bookRepository.findAll()).thenReturn(books);
+        when(bookService.getBooks()).thenReturn(books);
 
         mockMvc.perform(get("/findAllBooks"))
                 .andExpect(status().isOk())
@@ -59,10 +59,12 @@ public class BookControllerTest {
     @Test
     public void testDeleteBook() throws Exception {
         int id = 1;
+        when(bookService.deleteBook(id)).thenReturn("book deleted with id : " + id);
+
         mockMvc.perform(delete("/delete/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(content().string("book deleted with id : " + id));
 
-        verify(bookRepository, times(1)).deleteById(id);
+        verify(bookService, times(1)).deleteBook(id);
     }
 }
