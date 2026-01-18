@@ -1,7 +1,7 @@
 package com.spring.angular.example.Bookservice.controller;
 
 import com.spring.angular.example.Bookservice.entity.Book;
-import com.spring.angular.example.Bookservice.repository.BookRepository;
+import com.spring.angular.example.Bookservice.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +13,12 @@ import java.util.List;
 @RestController
 public class BookController {
 
+    private final BookService bookService;
+
     @Autowired
-    private BookRepository bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     /**
      * Adds a new book to the database.
@@ -24,7 +28,7 @@ public class BookController {
      */
     @PostMapping("/addBook")
     public Book addBook(@RequestBody Book book) {
-        return bookRepository.save(book);
+        return bookService.saveBook(book);
     }
 
     /**
@@ -34,7 +38,7 @@ public class BookController {
      */
     @GetMapping("/findAllBooks")
     public List<Book> getBooks() {
-        return bookRepository.findAll();
+        return bookService.getBooks();
     }
 
     /**
@@ -45,7 +49,6 @@ public class BookController {
      */
     @DeleteMapping("/delete/{id}")
     public String deleteBook(@PathVariable int id) {
-        bookRepository.deleteById(id);
-        return "book deleted with id : " + id;
+        return bookService.deleteBook(id);
     }
 }
