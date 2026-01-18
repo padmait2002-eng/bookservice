@@ -4,11 +4,38 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-	
+
+/**
+ * Represents a Book data transfer object.
+ * The @Data annotation from Lombok automatically generates getters, setters, toString, equals, and hashCode methods.
+ * The @AllArgsConstructor annotation generates a constructor with all fields.
+ * The @NoArgsConstructor annotation generates a no-argument constructor.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book implements Serializable {
+
+	/**
+	 * The unique identifier for the book.
+	 */
+	private int id;
+	/**
+	 * The name of the book.
+	 */
+	private String name;
+	/**
+	 * The price of the book.
+	 */
+	private int price;
+
+	/**
+	 * The serial version UID for serialization.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	// Note: The explicit getters and setters below are redundant because the @Data annotation
+	// from Lombok already generates them. They can be safely removed.
 
 	public int getId() {
 		return id;
@@ -28,17 +55,5 @@ public class Book implements Serializable {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public Book(int id, String name, int price) {
-		this.id=id;
-		this.name= name;
-		this.price=price;
-	}
-	private int id;
-	private String name;
-	private int price;
 
 }
