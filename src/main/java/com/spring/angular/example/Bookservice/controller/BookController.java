@@ -36,4 +36,16 @@ public class BookController {
     public List<Book> getBooks() {
         return bookRepository.findAll();
     }
+
+    /**
+     * Deletes a book by its ID.
+     *
+     * @param id The ID of the book to delete.
+     * @return A confirmation message.
+     */
+    @DeleteMapping("/delete/{id}")
+    public String deleteBook(@PathVariable int id) {
+        bookRepository.deleteById(id);
+        return "book deleted with id : " + id;
+    }
 }
