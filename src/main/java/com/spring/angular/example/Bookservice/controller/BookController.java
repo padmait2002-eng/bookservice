@@ -11,7 +11,7 @@ import java.util.List;
  * Controller for handling book-related requests.
  */
 @RestController
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin({"http://localhost:4200", "http://localhost:3001"})
 public class BookController {
 
     private final BookService bookService;
