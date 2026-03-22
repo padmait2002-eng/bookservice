@@ -20,9 +20,6 @@
 
 .form-group {
   width: 100%;
-  display: flex;
-  flex-direction: column; /* force inputs to stack vertically */
-  gap: 8px;
 }
 
 .form-input {
@@ -31,7 +28,7 @@
   border: 2px solid #ddd;
   border-radius: 4px;
   font-size: 1em;
-  box-sizing: border-box; /* ensure padding doesn't affect width */
+  box-sizing: border-box; /* Added to ensure padding doesn't affect width */
   transition: border-color 0.3s;
 }
 
@@ -40,8 +37,18 @@
   border-color: #667eea;
 }
 
+.input-error {
+  border-color: #ff6b6b;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.85em;
+  margin-top: 5px;
+}
+
 .btn-add {
-  padding: 10px 16px;
+  padding: 10px 30px;
   background: #667eea;
   color: white;
   border: none;
@@ -49,22 +56,16 @@
   font-size: 1em;
   cursor: pointer;
   transition: background 0.3s;
-  white-space: normal;
-  width: 100%; /* make button full width and avoid overlap */
-  box-sizing: border-box;
-  margin-top: 6px;
+  white-space: nowrap;
+  align-self: stretch; /* Make button full width */
+  margin-top: 10px;
 }
 
 .btn-add:hover {
   background: #5568d3;
 }
 
-/* small screens: keep form compact */
-@media (max-width: 480px) {
-  .book-form-container {
-    padding: 18px;
-  }
-  .btn-add {
-    padding: 10px;
-  }
+.btn-add:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
