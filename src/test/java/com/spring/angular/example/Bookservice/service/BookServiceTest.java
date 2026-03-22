@@ -10,8 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,5 +57,19 @@ public class BookServiceTest {
         String actualResponse = bookService.deleteBook(bookId);
         assertEquals(expectedResponse, actualResponse);
         verify(bookRepository, times(1)).deleteById(bookId);
+    }
+
+    @Test
+    public void testUpdateBook() {
+        Book existingBook = new Book(1, "Java", 999);
+        Book updatedDetails = new Book(1, "Advanced Java", 1200);
+
+        when(bookRepository.findById(1)).thenReturn(Optional.of(existingBook));
+        when(bookRepository.save(existingBook)).thenReturn(existingBook);
+
+        Book result = bookService.updateBook(updatedDetails);
+        
+        assertEquals("Advanced Java", result.getName());
+        assertEquals(1200, result.getPrice());
     }
 }

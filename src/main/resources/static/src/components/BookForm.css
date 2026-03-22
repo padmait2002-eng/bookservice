@@ -1,0 +1,70 @@
+.book-form-container {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.book-form-container h2 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* force inputs to stack vertically */
+  gap: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box; /* ensure padding doesn't affect width */
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.btn-add {
+  padding: 10px 16px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: normal;
+  width: 100%; /* make button full width and avoid overlap */
+  box-sizing: border-box;
+  margin-top: 6px;
+}
+
+.btn-add:hover {
+  background: #5568d3;
+}
+
+/* small screens: keep form compact */
+@media (max-width: 480px) {
+  .book-form-container {
+    padding: 18px;
+  }
+  .btn-add {
+    padding: 10px;
+  }
+}
