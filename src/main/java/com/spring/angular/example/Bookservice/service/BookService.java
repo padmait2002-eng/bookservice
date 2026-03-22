@@ -25,4 +25,14 @@ public class BookService {
         bookRepository.deleteById(id);
         return "book deleted with id : " + id;
     }
+
+    public Book updateBook(Book book) {
+        Book existingBook = bookRepository.findById(book.getId()).orElse(null);
+        if (existingBook != null) {
+            existingBook.setName(book.getName());
+            existingBook.setPrice(book.getPrice());
+            return bookRepository.save(existingBook);
+        }
+        return null;
+    }
 }

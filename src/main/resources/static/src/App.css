@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.add-book-section {
+  max-width: 400px;
+  margin: 30px auto 20px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 24px 32px 20px 32px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.right-panel {
+  flex: 2;
+  min-width: 400px;
+}
+
+.loading {
+  color: white;
+  font-size: 18px;
+  margin-top: 50px;
+}

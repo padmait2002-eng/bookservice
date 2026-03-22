@@ -11,6 +11,7 @@ import java.util.List;
  * Controller for handling book-related requests.
  */
 @RestController
+@CrossOrigin("http://localhost:4200")
 public class BookController {
 
     private final BookService bookService;
@@ -50,5 +51,16 @@ public class BookController {
     @DeleteMapping("/delete/{id}")
     public String deleteBook(@PathVariable int id) {
         return bookService.deleteBook(id);
+    }
+
+    /**
+     * Updates an existing book.
+     *
+     * @param book The book object containing updated information.
+     * @return The updated book.
+     */
+    @PutMapping("/update")
+    public Book updateBook(@RequestBody Book book) {
+        return bookService.updateBook(book);
     }
 }
