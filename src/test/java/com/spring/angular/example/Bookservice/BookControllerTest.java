@@ -81,4 +81,19 @@ public class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedResponse));
     }
+
+    @Test
+    public void testUpdateBook() throws Exception {
+        Book book = new Book(1, "Java", 999);
+        Book updatedBook = new Book(1, "Advanced Java", 1200);
+
+        when(bookService.updateBook(any(Book.class))).thenReturn(updatedBook);
+
+        mockMvc.perform(put("/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Advanced Java"))
+                .andExpect(jsonPath("$.price").value(1200));
+    }
 }
