@@ -3,6 +3,7 @@ import './BookCard.css';
 
 function BookCard({ book, onDelete, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState('');
   const [editData, setEditData] = useState({
     name: book.name,
     price: book.price
@@ -10,6 +11,13 @@ function BookCard({ book, onDelete, onUpdate }) {
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
+    if(name === 'name') {
+      if (/^\d/.test(value)) {
+        setError('Book name should not start with a number');
+      } else {
+        setError('');
+      }
+    }
     setEditData(prevState => ({
       ...prevState,
       [name]: value
@@ -17,12 +25,16 @@ function BookCard({ book, onDelete, onUpdate }) {
   };
 
   const handleSave = () => {
+    if(error) {
+        return;
+    }
     onUpdate({
       id: book.id,
       name: editData.name,
       price: parseFloat(editData.price)
     });
     setIsEditing(false);
+    setError('');
   };
 
   const handleCancel = () => {
@@ -39,8 +51,9 @@ function BookCard({ book, onDelete, onUpdate }) {
             name="name"
             value={editData.name}
             onChange={handleEditChange}
-            className="edit-input"
+            className={`edit-input ${error ? 'input-error' : ''}` }
           />
+          {error && <div className="error-message">{error}</div>}
           <input
             type="number"
             name="price"
@@ -50,7 +63,7 @@ function BookCard({ book, onDelete, onUpdate }) {
             step="0.01"
           />
           <div className="card-actions">
-            <button className="btn-save" onClick={handleSave}>Save</button>
+            <button className="btn-save" disabled={!!error} onClick={handleSave}>Save</button>
             <button className="btn-cancel" onClick={handleCancel}>Cancel</button>
           </div>
         </div>

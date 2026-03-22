@@ -6,9 +6,19 @@ function BookForm({ onAddBook }) {
     name: '',
     price: ''
   });
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'name') {
+      if (/^\d/.test(value)) {
+        setError('Book name should not start with a number');
+      } else {
+        setError('');
+      }
+    }
+
     setFormData(prevState => ({
       ...prevState,
       [name]: value
@@ -17,12 +27,16 @@ function BookForm({ onAddBook }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      return;
+    }
     if (formData.name.trim() && formData.price.trim()) {
       onAddBook({
         name: formData.name,
         price: parseFloat(formData.price)
       });
       setFormData({ name: '', price: '' });
+      setError('');
     }
   };
 
@@ -37,8 +51,9 @@ function BookForm({ onAddBook }) {
             placeholder="Book Name"
             value={formData.name}
             onChange={handleChange}
-            className="form-input"
+            className={`form-input ${error ? 'input-error' : ''}`}
           />
+          {error && <div className="error-message">{error}</div>}
         </div>
         <div className="form-group">
           <input
@@ -51,11 +66,10 @@ function BookForm({ onAddBook }) {
             step="0.01"
           />
         </div>
-        <button type="submit" className="btn-add">Add Book</button>
+        <button type="submit" className="btn-add" disabled={!!error}>Add Book</button>
       </form>
     </div>
   );
 }
 
 export default BookForm;
-
